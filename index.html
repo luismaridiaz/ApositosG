@@ -1,0 +1,661 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>App Apósitos & Heridas – SESPA / España</title>
+<style>
+  :root {
+    --primary: #0d6efd;
+    --secondary: #198754;
+    --danger: #dc3545;
+    --warning: #ffc107;
+    --light: #f8f9fa;
+    --dark: #212529;
+    --bg: #f4f7fb;
+  }
+  * { box-sizing: border-box; }
+  body {
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    margin: 0;
+    background: var(--bg);
+    color: var(--dark);
+    line-height: 1.6;
+  }
+  header {
+    background: linear-gradient(135deg, #0d6efd, #0a58ca);
+    color: white;
+    padding: 1.5rem 1rem;
+    text-align: center;
+    box-shadow: 0 2px 8px rgba(0,0,0,.15);
+  }
+  header h1 { margin: 0; font-size: 1.8rem; }
+  header p { margin: 0.4rem 0 0; opacity: .9; font-size: .95rem; }
+  nav {
+    background: white;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: .5rem;
+    padding: .75rem;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 2px 6px rgba(0,0,0,.08);
+  }
+  nav button {
+    background: #e9ecef;
+    border: none;
+    padding: .5rem 1rem;
+    border-radius: 20px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: all .2s;
+  }
+  nav button:hover, nav button.active {
+    background: var(--primary);
+    color: white;
+  }
+  main { max-width: 1100px; margin: 1.5rem auto; padding: 0 1rem 3rem; }
+  section { display: none; background: white; border-radius: 12px; padding: 1.5rem; box-shadow: 0 2px 12px rgba(0,0,0,.06); margin-bottom: 1.5rem; }
+  section.active { display: block; }
+  h2 { color: var(--primary); border-bottom: 2px solid #e9ecef; padding-bottom: .4rem; margin-top: 0; }
+  h3 { color: #0a58ca; }
+  table { width: 100%; border-collapse: collapse; margin: 1rem 0; font-size: .92rem; }
+  th, td { border: 1px solid #dee2e6; padding: .6rem .8rem; text-align: left; }
+  th { background: #e7f1ff; }
+  tr:nth-child(even) { background: #f8f9fa; }
+  .card { background: #f8f9fa; border-left: 4px solid var(--primary); padding: 1rem; margin: 1rem 0; border-radius: 6px; }
+  .warning { border-left-color: var(--warning); background: #fff8e1; }
+  .danger { border-left-color: var(--danger); background: #fff5f5; }
+  .success { border-left-color: var(--secondary); background: #e8f5e9; }
+  label { display: block; margin: .6rem 0 .2rem; font-weight: 600; }
+  select, input, textarea { width: 100%; padding: .5rem; border: 1px solid #ced4da; border-radius: 6px; font-size: 1rem; }
+  button.primary { background: var(--primary); color: white; border: none; padding: .7rem 1.4rem; border-radius: 6px; cursor: pointer; font-size: 1rem; margin-top: 1rem; }
+  button.primary:hover { background: #0b5ed7; }
+  #resultado { margin-top: 1.2rem; padding: 1rem; background: #e7f1ff; border-radius: 8px; display: none; }
+  .badge { display: inline-block; padding: .2rem .6rem; border-radius: 12px; font-size: .8rem; font-weight: 600; }
+  .badge-green { background: #d1e7dd; color: #0f5132; }
+  .badge-blue { background: #cfe2ff; color: #084298; }
+  .badge-orange { background: #ffe5d0; color: #984c0c; }
+  footer { text-align: center; font-size: .85rem; color: #6c757d; padding: 2rem 1rem; }
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+  @media (max-width: 700px) { .grid-2 { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>App Apósitos & Cuidado de Heridas</h1>
+  <p>Guía práctica basada en documentos clínicos, SESPA Asturias y principios del Ministerio de Sanidad / guías españolas</p>
+  <p style="font-size:.8rem; margin-top:.4rem;">Educativa · No sustituye valoración clínica ni protocolos locales</p>
+</header>
+
+<nav>
+  <button onclick="showSection('inicio')" class="active">Inicio</button>
+  <button onclick="showSection('valoracion')">Valoración Clínica</button>
+  <button onclick="showSection('clasificacion')">Clasificación</button>
+  <button onclick="showSection('seleccion')">Selección</button>
+  <button onclick="showSection('dd')">DD Úlceras</button>
+  <button onclick="showSection('botdd')">Bot DD Bayesiano</button>
+  <button onclick="showSection('bot')">Bot Tratamientos</button>
+  <button onclick="showSection('catalogo')">Catálogo & Costes</button>
+  <button onclick="showSection('internacionales')">Miel & Larvas</button>
+  <button onclick="showSection('referencias')">Referencias</button>
+</nav>
+
+<main>
+  <!-- INICIO -->
+  <section id="inicio" class="active">
+    <h2>Fundamento: Cura en Ambiente Húmedo (CAH)</h2>
+    <div class="card success">
+      <strong>Principio clave:</strong> Mantener el lecho húmedo (sin exceso de exudado) favorece la migración de queratinocitos y fibroblastos, reduce el dolor, evita costra y disminuye tiempo de cicatrización respecto a la cura seca tradicional. Evidencia sólida (revisiones sistemáticas y metaanálisis).
+    </div>
+    <h3>Breve historia</h3>
+    <ul>
+      <li><strong>Antigüedad:</strong> Egipto (~2500 a.C.) – lino, grasa, miel.</li>
+      <li><strong>Siglo XIX:</strong> Gasas de algodón y Gamgee tissue + bacteriología (Lister).</li>
+      <li><strong>1962:</strong> Winter demuestra que el ambiente húmedo cicatriza más rápido.</li>
+      <li><strong>1980s-actualidad:</strong> Apósitos interactivos/bioactivos (hidrocoloides, alginatos, espumas, hidrogeles…).</li>
+    </ul>
+    <div class="card">
+      <strong>Materiales SESPA Asturias:</strong> Catálogo de productos de cura en ambiente húmedo con códigos internos (Biatain, Aquacel, Mepilex, Urgo, Cutimed Sorbact, etc.). El Ministerio de Sanidad y guías autonómicas respaldan la CAH como estándar.
+    </div>
+  </section>
+
+  <!-- VALORACIÓN CLÍNICA (integrada de WoundDecision) -->
+  <section id="valoracion">
+    <h2>Valoración Clínica Orientativa</h2>
+    <p>Formulario estructurado que genera puntuación (venoso / arterial / neuropático), alertas de seguridad y plan de cuidados. Basado en patrones clínicos estándar.</p>
+    <div class="card warning">
+      <strong>Aviso:</strong> Herramienta educativa de apoyo. No sustituye valoración presencial, ITB ni juicio clínico.
+    </div>
+
+    <label>Localización</label>
+    <select id="v_loc">
+      <option value="">— Seleccione —</option>
+      <option value="maleolo_interno">Maléolo interno / gaiter</option>
+      <option value="dedos">Dedos / distal</option>
+      <option value="talon">Talón</option>
+      <option value="plantar">Plantar / metatarsianos</option>
+      <option value="prominencia">Prominencia ósea</option>
+    </select>
+
+    <label>Dolor</label>
+    <select id="v_pain">
+      <option value="">— Seleccione —</option>
+      <option value="venoso">Sordo, mejora al elevar</option>
+      <option value="arterial">Intenso, empeora al elevar</option>
+      <option value="ausente">Ausente / insensibilidad</option>
+    </select>
+
+    <label>Pulsos</label>
+    <select id="v_pulses">
+      <option value="">— Seleccione —</option>
+      <option value="presentes">Presentes</option>
+      <option value="debiles">Débiles</option>
+      <option value="ausentes">Ausentes</option>
+    </select>
+
+    <label>Lecho</label>
+    <select id="v_bed">
+      <option value="">— Seleccione —</option>
+      <option value="granulacion">Granulación</option>
+      <option value="esfacelo">Esfacelo</option>
+      <option value="necrosis">Necrosis</option>
+    </select>
+
+    <label>Exudado</label>
+    <select id="v_exu">
+      <option value="">— Seleccione —</option>
+      <option value="bajo">Bajo</option>
+      <option value="moderado">Moderado</option>
+      <option value="alto">Alto</option>
+    </select>
+
+    <label>ITB (opcional)</label>
+    <input type="number" id="v_itb" step="0.01" placeholder="Ej. 0.85">
+
+    <label><input type="checkbox" id="v_dm"> Diabetes conocida</label><br>
+    <label><input type="checkbox" id="v_inf"> Signos de infección</label>
+
+    <button class="primary" onclick="analizarValoracion()">Analizar y generar plan</button>
+    <div id="resultadoValoracion" style="margin-top:1.2rem; display:none;"></div>
+  </section>
+
+  <!-- CLASIFICACIÓN -->
+  <section id="clasificacion">
+    <h2>Clasificación de Apósitos</h2>
+    <h3>Pasivos (Tradicionales)</h3>
+    <p>Protegen y absorben, pero no mantienen activamente el ambiente húmedo óptimo.</p>
+    <ul>
+      <li><strong>Gasas</strong> (tejidas o no tejidas): relleno, limpieza, secundario.</li>
+      <li><strong>Espumas simples:</strong> absorción limitada; no más de 48 h por adherencia.</li>
+    </ul>
+    <h3>Avanzados (Interactivos / CAH)</h3>
+    <table>
+      <tr><th>Tipo</th><th>Mecanismo</th><th>Indicación principal</th><th>Ejemplos comerciales</th></tr>
+      <tr><td>Hidrogeles</td><td>Donan humedad (70-90% agua)</td><td>Heridas secas, necrosis, esfacelo</td><td>Nu-Gel, Intrasite, Purilon</td></tr>
+      <tr><td>Hidrocoloides</td><td>Forman gel al absorber</td><td>Exudado escaso-moderado</td><td>Comfeel, Varihesive, DuoDERM</td></tr>
+      <tr><td>Espumas (Foam)</td><td>Alta absorción, no adherentes</td><td>Exudado moderado-alto</td><td>Biatain, Allevyn, Mepilex</td></tr>
+      <tr><td>Alginatos</td><td>Gelifican + hemostasia (Ca)</td><td>Exudado alto, sangrado, cavidades</td><td>Urgosorb, Algisite, Biatain Alginate</td></tr>
+      <tr><td>Hidrofibra</td><td>Alta absorción vertical</td><td>Exudado moderado-alto, cavidades</td><td>Aquacel Extra</td></tr>
+      <tr><td>Silicona</td><td>Baja adherencia atraumática</td><td>Piel frágil, dolor, granulación</td><td>Mepilex, Biatain Silicone</td></tr>
+      <tr><td>Plata</td><td>Antimicrobiano (Ag+)</td><td>Infección o alto riesgo (temporal)</td><td>Aquacel Ag, Biatain Ag, Mepilex Border Ag</td></tr>
+      <tr><td>Carbón</td><td>Adsorbe olores</td><td>Heridas malolientes</td><td>Actisorb, Carboflex</td></tr>
+      <tr><td>Films</td><td>Barrera permeable al vapor</td><td>Heridas superficiales</td><td>Opsite, Tegaderm</td></tr>
+    </table>
+  </section>
+
+  <!-- SELECCIÓN -->
+  <section id="seleccion">
+    <h2>Cómo elegir el apósito</h2>
+    <table>
+      <tr><th>Situación del lecho</th><th>Apósito de elección</th><th>Notas</th></tr>
+      <tr><td>Seca / necrosis</td><td>Hidrogel</td><td>Desbridamiento autolítico. Precaución en pie diabético/arterial sin valorar vascularización.</td></tr>
+      <tr><td>Esfacelo + exudado mod-alto</td><td>Alginato o Hidrofibra</td><td>Rellenar ≤¾ de cavidad.</td></tr>
+      <tr><td>Granulación</td><td>Espuma o Silicona</td><td>Proteger tejido nuevo.</td></tr>
+      <tr><td>Epitelización</td><td>Film o Hidrocoloide fino</td><td>Permitir visualización.</td></tr>
+      <tr><td>Exudado alto</td><td>Espuma / Alginato / Superabsorbente</td><td>Evitar maceración.</td></tr>
+      <tr><td>Infección / colonización crítica</td><td>Plata, PHMB, DACC o cadexómero yodado</td><td>Revisar a los 10-14 días. No uso rutinario profiláctico.</td></tr>
+      <tr><td>Mal olor</td><td>Carbón activado (± plata)</td><td>Control de síntomas.</td></tr>
+      <tr><td>Piel frágil / dolor</td><td>Silicona</td><td>Retirada atraumática.</td></tr>
+    </table>
+    <div class="card warning">
+      <strong>Siempre:</strong> Limpiar con suero fisiológico por irrigación, secar bordes, margen de 2-3 cm. Frecuencia según saturación o máximo del producto (generalmente 1-7 días).
+    </div>
+  </section>
+
+  <!-- DD -->
+  <section id="dd">
+    <h2>Diagnóstico Diferencial de Úlceras</h2>
+    <table>
+      <tr><th>Característica</th><th>Arterial</th><th>Venosa</th><th>Neuropática (DFU)</th></tr>
+      <tr><td>Localización</td><td>Distal, dedos, talón, pretibial</td><td>Maleolar medial (área de la polaina)</td><td>Plantas, prominencias óseas del pie</td></tr>
+      <tr><td>Aspecto</td><td>Pequeña, profunda, “sacabocado”, lecho pálido/necrótico</td><td>Superficial, grande, irregular, granulación o fibrina</td><td>Variable, callosidad perilesional frecuente</td></tr>
+      <tr><td>Exudado</td><td>Escaso o nulo</td><td>Abundante</td><td>Variable</td></tr>
+      <tr><td>Dolor</td><td>Intenso (empeora al elevar la pierna)</td><td>Leve o ausente (salvo infección)</td><td>Ausente o reducido (neuropatía)</td></tr>
+      <tr><td>Pulsos</td><td>Ausentes o débiles</td><td>Presentes</td><td>Generalmente presentes</td></tr>
+      <tr><td>Piel</td><td>Fría, pálida, brillante, sin vello</td><td>Edema, pigmentación ocre, eczema</td><td>Caliente o normal, callos</td></tr>
+      <tr><td>ITB</td><td>< 0.9 (crítico < 0.5)</td><td>Normal (0.9-1.3)</td><td>Puede ser normal o falsamente elevado</td></tr>
+      <tr><td>Compresión</td><td><strong>Contraindicada</strong> si ITB bajo</td><td>Pilar del tratamiento</td><td>Según componente vascular</td></tr>
+    </table>
+    <div class="card danger">
+      <strong>Importante:</strong> Valorar siempre ITB (índice tobillo-brazo) antes de comprimir. En pie diabético con necrosis: no hidratar hasta descartar isquemia crítica. Mixtas son frecuentes (10-20%).
+    </div>
+  </section>
+
+  <!-- BOT DD BAYESIANO -->
+  <section id="botdd">
+    <h2>Bot de Diagnóstico Diferencial Bayesiano</h2>
+    <p>Actualiza las probabilidades a posteriori de las principales etiologías de úlceras de extremidad inferior según hallazgos clínicos (Naive Bayes simplificado). Priors basados en literatura (NEJM 2017, estudios GNEAUPP España): venosa predominante (~65 %), arterial ~10 %, neuropática ~15 %, mixta ~10 %, otras ~5 %.</p>
+    <div class="card warning">
+      <strong>Importante:</strong> Modelo educativo ilustrativo. Likelihoods aproximadas de patrones clínicos clásicos (no de dataset validado). Completar siempre con ITB, eco-Doppler, monofilamento y juicio clínico. No sustituye diagnóstico.
+    </div>
+    <div class="grid-2">
+      <div>
+        <label>Localización principal</label>
+        <select id="dd_loc">
+          <option value="none">No especificada</option>
+          <option value="maleolar_med">Maleolar medial / gaiter</option>
+          <option value="distal">Distal (dedos, talón, pretibial)</option>
+          <option value="plantar">Plantar / metatarsianos</option>
+          <option value="prominencia">Prominencia ósea (sacro, etc.)</option>
+        </select>
+      </div>
+      <div>
+        <label>Dolor</label>
+        <select id="dd_dolor">
+          <option value="none">No valorado</option>
+          <option value="intenso">Intenso (empeora al elevar)</option>
+          <option value="leve">Leve / moderado</option>
+          <option value="ausente">Ausente / insensibilidad</option>
+        </select>
+      </div>
+      <div>
+        <label>Pulsos pedios / tibiales</label>
+        <select id="dd_pulsos">
+          <option value="none">No valorados</option>
+          <option value="presentes">Presentes</option>
+          <option value="debiles">Débiles o ausentes</option>
+        </select>
+      </div>
+      <div>
+        <label>Exudado</label>
+        <select id="dd_exu">
+          <option value="none">No especificado</option>
+          <option value="alto">Alto / abundante</option>
+          <option value="bajo">Escaso / nulo</option>
+        </select>
+      </div>
+      <div>
+        <label>Cambios cutáneos / piel</label>
+        <select id="dd_piel">
+          <option value="none">No valorados</option>
+          <option value="ocre">Pigmentación ocre, edema, lipodermatosclerosis</option>
+          <option value="fria">Fría, pálida, brillante, sin vello</option>
+          <option value="callo">Callosidad, seca, insensible</option>
+        </select>
+      </div>
+      <div>
+        <label>Historia de diabetes</label>
+        <select id="dd_dm">
+          <option value="no">No</option>
+          <option value="si">Sí</option>
+        </select>
+      </div>
+    </div>
+    <button class="primary" onclick="calcularBayes()">Calcular probabilidades a posteriori</button>
+    <div id="resultadoDD" style="margin-top:1.2rem; padding:1rem; background:#e7f1ff; border-radius:8px; display:none;"></div>
+  </section>
+
+  <!-- BOT TRATAMIENTOS -->
+    <h2>Bot de Tratamientos (recomendación orientativa)</h2>
+    <p>Selecciona las características de la herida. El bot aplica la lógica de los documentos clínicos y catálogo SESPA.</p>
+    <div class="grid-2">
+      <div>
+        <label>Tipo de herida / úlcera</label>
+        <select id="tipo">
+          <option value="general">General / no especificada</option>
+          <option value="arterial">Arterial</option>
+          <option value="venosa">Venosa</option>
+          <option value="dfu">Pie diabético</option>
+          <option value="upp">Úlcera por presión</option>
+          <option value="quirurgica">Quirúrgica</option>
+          <option value="quemadura">Quemadura 2º</option>
+          <option value="skin">Desgarro cutáneo (skin tear)</option>
+        </select>
+      </div>
+      <div>
+        <label>Nivel de exudado</label>
+        <select id="exudado">
+          <option value="seco">Seco / nulo</option>
+          <option value="escaso">Escaso</option>
+          <option value="moderado">Moderado</option>
+          <option value="alto">Alto / abundante</option>
+        </select>
+      </div>
+      <div>
+        <label>Tejido predominante</label>
+        <select id="tejido">
+          <option value="necrotico">Necrótico / escara</option>
+          <option value="esfacelo">Esfacelo</option>
+          <option value="granulacion">Granulación</option>
+          <option value="epitelizacion">Epitelización</option>
+        </select>
+      </div>
+      <div>
+        <label>¿Signos de infección?</label>
+        <select id="infeccion">
+          <option value="no">No</option>
+          <option value="si">Sí / colonización crítica</option>
+        </select>
+      </div>
+    </div>
+    <label>Observaciones adicionales (piel frágil, dolor, olor, cavidad…)</label>
+    <textarea id="obs" rows="2" placeholder="Ej: piel frágil, muy dolorosa, mal olor, cavidad..."></textarea>
+    <button class="primary" onclick="recomendar()">Generar recomendación</button>
+    <div id="resultado"></div>
+  </section>
+
+  <!-- CATÁLOGO -->
+  <section id="catalogo">
+    <h2>Catálogo orientativo (nombres comerciales + costes)</h2>
+    <p>Productos frecuentemente usados en España (SESPA, SAS, SERGAS, Comunidad de Madrid, etc.). Precios aproximados de mercado (unidad o caja pequeña); en sistema público suelen ser inferiores por concurso.</p>
+    <table>
+      <tr><th>Producto</th><th>Tipo</th><th>Indicación típica</th><th>Coste orientativo</th></tr>
+      <tr><td>Nu-Gel / Intrasite / Purilon</td><td>Hidrogel</td><td>Secas, necrosis, desbridamiento autolítico</td><td>4-12 €</td></tr>
+      <tr><td>Comfeel Plus / Varihesive / DuoDERM</td><td>Hidrocoloide</td><td>Exudado escaso-moderado</td><td>3-10 €</td></tr>
+      <tr><td>Biatain / Allevyn / Mepilex / Askina Foam / Cutimed Siltec</td><td>Espuma</td><td>Exudado moderado-alto</td><td>5-20 €</td></tr>
+      <tr><td>Urgosorb / Algisite M / Biatain Alginate / Cutimed Alginate</td><td>Alginato</td><td>Alto exudado, sangrado, cavidades</td><td>3-12 €</td></tr>
+      <tr><td>Aquacel Extra / Aquacel Foam</td><td>Hidrofibra</td><td>Alto exudado, cavidades</td><td>4-15 €</td></tr>
+      <tr><td>Aquacel Ag / Biatain Ag / Mepilex Border Ag / Acticoat / Silvercel</td><td>Plata</td><td>Infección o alto riesgo (temporal)</td><td>8-30 €</td></tr>
+      <tr><td>Cutimed Sorbact</td><td>DACC</td><td>Captación bacteriana</td><td>6-18 €</td></tr>
+      <tr><td>UrgoStart / UrgoClean Ag</td><td>Modulador / Ag</td><td>Heridas crónicas difíciles / infectadas</td><td>10-25 €</td></tr>
+      <tr><td>Actisorb Plus / Askina Carbosorb / Carboflex</td><td>Carbón</td><td>Mal olor</td><td>5-15 €</td></tr>
+      <tr><td>Urgotul / Adaptic / Mepitel</td><td>Malla no adherente</td><td>Protección lecho, epitelización</td><td>3-10 €</td></tr>
+      <tr><td>PROMOGRAN / PROMOGRAN PRISMA</td><td>Colágeno + ORC</td><td>Heridas estancadas (uso selectivo)</td><td>6-9 €</td></tr>
+      <tr><td>URGOSTART</td><td>TLC-NOSF</td><td>Úlceras venosas / DFU difíciles</td><td>6-12 €</td></tr>
+      <tr><td>CUTIMED EPIONA</td><td>Colágeno</td><td>Modulador de proteasas</td><td>5-10 €</td></tr>
+      <tr><td>MEDIHONEY / ACTIVON</td><td>Miel médica</td><td>Quemaduras, heridas seleccionadas</td><td>Variable (uso limitado en España)</td></tr>
+    <div class="card">
+      <strong>SESPA Asturias (ejemplos):</strong> Biatain Silicone, Aquacel Foam Pro, Mepilex Border Ag, Urgosorb, Nu-Gel, Cutimed Sorbact, sistemas de compresión Profore/Jobst.
+    </div>
+  </section>
+
+  <!-- TRATAMIENTOS INTERNACIONALES -->
+  <section id="internacionales">
+    <h2>Tratamientos de otros países: Miel y Larvas (Reino Unido)</h2>
+    <div class="card success">
+      <strong>Miel médica (Manuka / medical-grade honey):</strong> Propiedades antimicrobianas (metilglioxal), antiinflamatorias y de desbridamiento autolítico. Usada en Reino Unido y otros países.
+    </div>
+    <ul>
+      <li><strong>Evidencia (Cochrane Jull et al.):</strong> Alta calidad para cicatrización más rápida de quemaduras de espesor parcial (~4-5 días menos). Evidencia limitada en úlceras crónicas y pie diabético (IWGDF no recomienda de rutina).</li>
+      <li>Productos: MEDIHONEY, ACTIVON/ACTILITE, L-MESITRAN. Nota: AEMPS retiró algunos lotes de MediHoney en 2025 por problemas de esterilidad.</li>
+    </ul>
+    <div class="card success">
+      <strong>Terapia larval (MDT – Lucilia sericata):</strong> Desbridamiento biológico selectivo. Disponible en NHS (LarvE®). En España: uso compasivo (RD 1015/2009).
+    </div>
+    <ul>
+      <li><strong>Evidencia:</strong> Metaanálisis 2025 (RR 2,17 para desbridamiento completo, p=0,09, heterogeneidad alta). Alternativa cuando el desbridamiento quirúrgico no es viable. NICE considera en UPP seleccionadas.</li>
+      <li>Coste orientativo LarvE®: ~£58/frasco (300 larvas). Requiere formación y aceptación del paciente.</li>
+    </ul>
+    <div class="card warning">
+      <strong>Notas:</strong> Ambos tratamientos tienen evidencia específica pero no sustituyen el estándar de CAH ni la valoración etiológica. En España su disponibilidad es limitada (miel médica en algunos catálogos; larvas menos frecuente). Consultar guías locales y evidencia actualizada.
+    </div>
+    <p style="font-size:.85rem;">Referencias principales: Cochrane Database Syst Rev (Honey for wounds, Jull et al.); Systematic reviews on larval therapy (MDPI 2025, PMC reviews); NICE guidelines on pressure ulcers.</p>
+  </section>
+
+  <!-- REFERENCIAS -->
+  <section id="referencias">
+    <h2>Referencias y fuentes</h2>
+    <ul>
+      <li>Documentos aportados sobre clasificación, historia y selección de apósitos.</li>
+      <li>Catálogo y guía de heridas SESPA Asturias (Consejo General de Enfermería).</li>
+      <li>Principios de cura en ambiente húmedo respaldados por revisiones sistemáticas y metaanálisis (UPP, DFU, heridas quirúrgicas).</li>
+      <li>Guías: EPUAP/NPIAP/PPPIA, IWGDF 2024, IWII, GNEAUPP.</li>
+      <li>Evidencia plata: revisiones Cochrane (evidencia insuficiente para uso rutinario).</li>
+    </ul>
+    <div class="card warning">
+      <strong>Limitaciones:</strong> Costes orientativos (pueden variar). Selección final depende de valoración holística, disponibilidad local y juicio clínico. Consultar protocolos SESPA actualizados y Ministerio/guías autonómicas.
+    </div>
+  </section>
+</main>
+
+<footer>
+  App educativa generada a partir de documentos clínicos y materiales SESPA / sistema sanitario español. Última revisión: octubre 2026.<br>
+  No es un dispositivo médico ni sustituye la atención profesional.
+</footer>
+
+<script>
+function showSection(id) {
+  document.querySelectorAll('section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('nav button').forEach(b => b.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  event.target.classList.add('active');
+}
+
+function analizarValoracion() {
+  const loc = document.getElementById('v_loc').value;
+  const pain = document.getElementById('v_pain').value;
+  const pulses = document.getElementById('v_pulses').value;
+  const bed = document.getElementById('v_bed').value;
+  const exu = document.getElementById('v_exu').value;
+  const itb = parseFloat(document.getElementById('v_itb').value) || null;
+  const dm = document.getElementById('v_dm').checked;
+  const inf = document.getElementById('v_inf').checked;
+
+  let v = 0, a = 0, n = 0;
+  if (loc === 'maleolo_interno') v += 3;
+  if (loc === 'dedos' || loc === 'talon') a += 3;
+  if (loc === 'plantar') n += 3;
+  if (pain === 'venoso') v += 2;
+  if (pain === 'arterial') a += 3;
+  if (pain === 'ausente') n += 2;
+  if (pulses === 'ausentes') a += 3;
+  if (pulses === 'debiles') a += 2;
+  if (bed === 'necrosis') a += 2;
+  if (bed === 'granulacion') v += 1;
+  if (dm) n += 2;
+  if (itb !== null && itb < 0.9) a += 3;
+  if (itb !== null && itb > 1.3) a += 1;
+
+  const scores = [{k:'Venosa', s:v}, {k:'Arterial', s:a}, {k:'Neuropática', s:n}].sort((x,y)=>y.s-x.s);
+  const top = scores[0];
+  let mixed = (scores[1].s > 0 && top.s - scores[1].s <= 1 && top.s >= 3);
+
+  let html = `<div class="card"><h3>Resultado orientativo</h3>`;
+  html += `<p><strong>${mixed ? 'Componente mixto' : top.k}</strong></p>`;
+  html += `<div class="score-bar" style="display:flex;gap:8px;">
+    <div style="flex:1;text-align:center;padding:8px;background:#e8f5e9;border-radius:8px;">Venosa<br><b>${v}</b></div>
+    <div style="flex:1;text-align:center;padding:8px;background:#fdecea;border-radius:8px;">Arterial<br><b>${a}</b></div>
+    <div style="flex:1;text-align:center;padding:8px;background:#fef5e7;border-radius:8px;">Neuropática<br><b>${n}</b></div>
+  </div></div>`;
+
+  // Alertas
+  if (inf) html += `<div class="card danger"><strong>Infección:</strong> Valorar antibioticoterapia sistémica. Antimicrobiano tópico temporal (plata/PHMB) 10-14 días.</div>`;
+  if (pulses === 'ausentes' && (pain === 'arterial' || bed === 'necrosis')) html += `<div class="card danger"><strong>Sospecha isquemia crítica:</strong> Compresión contraindicada. Derivación urgente a vascular.</div>`;
+  if (itb !== null && itb < 0.9) html += `<div class="card danger"><strong>ITB < 0,9:</strong> No comprimir. Derivar a vascular.</div>`;
+
+  // Plan básico
+  html += `<div class="card"><h3>Plan orientativo</h3><ul>`;
+  if (top.k === 'Venosa' && !mixed) {
+    html += `<li>Pilar: <strong>compresión</strong> si ITB ≥ 0,9.</li><li>Apósito según exudado (espuma/alginato si alto).</li>`;
+  } else if (top.k === 'Arterial' || mixed) {
+    html += `<li><strong>No compresión</strong> hasta valoración vascular.</li><li>Apósito no adherente o hidrogel si necrosis.</li>`;
+  } else if (top.k === 'Neuropática') {
+    html += `<li>Pilar: <strong>descarga</strong> de presión.</li><li>Apósito básico en ambiente húmedo. Evitar antimicrobianos rutinarios.</li>`;
+  }
+  html += `</ul><p style="font-size:.85rem;color:#666;">Consulte las pestañas de Clasificación, Selección y Catálogo para más detalle.</p></div>`;
+
+  const res = document.getElementById('resultadoValoracion');
+  res.innerHTML = html;
+  res.style.display = 'block';
+}
+  document.querySelectorAll('section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('nav button').forEach(b => b.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  event.target.classList.add('active');
+}
+
+function calcularBayes() {
+  // Priors según literatura (NEJM 2017 ~70% venosa en pierna; estudios GNEAUPP España)
+  let prior = {
+    venosa: 0.62,
+    arterial: 0.10,
+    neuropatica: 0.15,
+    mixta: 0.08,
+    upp: 0.03,
+    otras: 0.02
+  };
+
+  // Likelihoods refinadas (orientativas)
+  const L = {
+    loc: {
+      maleolar_med: {venosa:0.80, arterial:0.04, neuropatica:0.03, mixta:0.10, upp:0.01, otras:0.02},
+      distal:       {venosa:0.08, arterial:0.65, neuropatica:0.10, mixta:0.12, upp:0.02, otras:0.03},
+      plantar:      {venosa:0.03, arterial:0.08, neuropatica:0.75, mixta:0.08, upp:0.03, otras:0.03},
+      prominencia:  {venosa:0.05, arterial:0.10, neuropatica:0.08, mixta:0.05, upp:0.65, otras:0.07}
+    },
+    dolor: {
+      intenso: {venosa:0.12, arterial:0.75, neuropatica:0.05, mixta:0.25, upp:0.15, otras:0.20},
+      leve:    {venosa:0.65, arterial:0.15, neuropatica:0.35, mixta:0.45, upp:0.40, otras:0.40},
+      ausente: {venosa:0.15, arterial:0.05, neuropatica:0.80, mixta:0.15, upp:0.30, otras:0.20}
+    },
+    pulsos: {
+      presentes: {venosa:0.85, arterial:0.08, neuropatica:0.80, mixta:0.35, upp:0.70, otras:0.60},
+      debiles:   {venosa:0.08, arterial:0.80, neuropatica:0.12, mixta:0.55, upp:0.15, otras:0.20}
+    },
+    exu: {
+      alto: {venosa:0.75, arterial:0.12, neuropatica:0.25, mixta:0.35, upp:0.40, otras:0.30},
+      bajo: {venosa:0.15, arterial:0.70, neuropatica:0.35, mixta:0.45, upp:0.25, otras:0.40}
+    },
+    piel: {
+      ocre: {venosa:0.80, arterial:0.04, neuropatica:0.08, mixta:0.25, upp:0.05, otras:0.10},
+      fria: {venosa:0.04, arterial:0.80, neuropatica:0.08, mixta:0.35, upp:0.10, otras:0.15},
+      callo:{venosa:0.04, arterial:0.08, neuropatica:0.75, mixta:0.10, upp:0.08, otras:0.10}
+    }
+  };
+
+  const loc = document.getElementById('dd_loc').value;
+  const dolor = document.getElementById('dd_dolor').value;
+  const pulsos = document.getElementById('dd_pulsos').value;
+  const exu = document.getElementById('dd_exu').value;
+  const piel = document.getElementById('dd_piel').value;
+  const dm = document.getElementById('dd_dm').value;
+
+  // Ajuste prior si diabetes (aumenta neuropática y algo arterial/mixta)
+  if (dm === 'si') {
+    prior.neuropatica += 0.20;
+    prior.arterial += 0.05;
+    prior.mixta += 0.03;
+    prior.venosa -= 0.20;
+    prior.upp -= 0.03;
+    prior.otras -= 0.05;
+    let sum = Object.values(prior).reduce((a,b)=>a+b,0);
+    for (let k in prior) prior[k] = Math.max(0.01, prior[k] / sum);
+  }
+
+  let post = {...prior};
+
+  function update(evidence, type) {
+    if (evidence === 'none' || !L[type] || !L[type][evidence]) return;
+    for (let eti in post) {
+      post[eti] *= (L[type][evidence][eti] || 0.25);
+    }
+  }
+
+  update(loc, 'loc');
+  update(dolor, 'dolor');
+  update(pulsos, 'pulsos');
+  update(exu, 'exu');
+  update(piel, 'piel');
+
+  // Normalizar
+  let total = Object.values(post).reduce((a,b)=>a+b,0);
+  for (let k in post) post[k] = (post[k] / total) * 100;
+
+  const sorted = Object.entries(post).sort((a,b)=>b[1]-a[1]);
+
+  let html = "<h3>Probabilidades a posteriori estimadas</h3><ul>";
+  sorted.forEach(([eti, p]) => {
+    const color = p > 40 ? "#198754" : p > 20 ? "#fd7e14" : "#6c757d";
+    html += `<li><strong>${eti.charAt(0).toUpperCase()+eti.slice(1)}</strong>: ${p.toFixed(1)}% <span style="color:${color};font-weight:bold;">${"█".repeat(Math.round(p/4))}</span></li>`;
+  });
+  html += "</ul>";
+  html += "<div class='card'><strong>Interpretación clínica:</strong> Priorizar la etiología de mayor probabilidad para pruebas complementarias (ITB obligatorio ante sospecha arterial/mixta; monofilamento si neuropática; eco-Doppler si venosa). Evitar compresión si probabilidad arterial o mixta elevada hasta confirmación vascular. UPP requiere alivio de presión.</div>";
+  html += "<p style='font-size:.85rem;color:#666;'>Modelo ilustrativo Naive Bayes. Likelihoods basadas en patrones clínicos estándar (localización, dolor, pulsos, etc.). No es un clasificador validado. Referencias: NEJM 2017 (Singer et al.), estudios GNEAUPP prevalencia España.</p>";
+
+  const res = document.getElementById('resultadoDD');
+  res.innerHTML = html;
+  res.style.display = 'block';
+}
+
+function recomendar() {
+  const tipo = document.getElementById('tipo').value;
+  const exudado = document.getElementById('exudado').value;
+  const tejido = document.getElementById('tejido').value;
+  const infeccion = document.getElementById('infeccion').value;
+  const obs = document.getElementById('obs').value.toLowerCase();
+
+  let rec = [];
+  let productos = [];
+
+  // Lógica principal
+  if (tejido === 'necrotico' || exudado === 'seco') {
+    rec.push("Hidrogel para aportar humedad y favorecer desbridamiento autolítico.");
+    productos.push("Nu-Gel, Intrasite o similar");
+  } else if (exudado === 'alto' || tejido === 'esfacelo') {
+    rec.push("Alginato o hidrofibra (alta absorción). Rellenar como máximo ¾ de la cavidad.");
+    productos.push("Urgosorb, Aquacel Extra, Biatain Alginate");
+  } else if (exudado === 'moderado') {
+    rec.push("Espuma de poliuretano o hidrofibra.");
+    productos.push("Biatain, Allevyn, Mepilex, Aquacel Foam");
+  } else {
+    rec.push("Hidrocoloide fino o film transparente.");
+    productos.push("Comfeel, Varihesive, Opsite");
+  }
+
+  if (infeccion === 'si') {
+    rec.push("Añadir componente antimicrobiano (plata, PHMB o DACC). Uso temporal (revisar 10-14 días).");
+    productos.push("Aquacel Ag, Biatain Ag, Mepilex Border Ag, Cutimed Sorbact");
+  }
+
+  if (obs.includes('fragil') || obs.includes('dolor') || obs.includes('silicona')) {
+    rec.push("Preferir apósitos con silicona de baja adherencia.");
+    productos.push("Mepilex, Biatain Silicone");
+  }
+  if (obs.includes('olor')) {
+    rec.push("Considerar carbón activado para control de olor.");
+    productos.push("Actisorb, Carboflex");
+  }
+
+  // Específicos por tipo
+  if (tipo === 'venosa') {
+    rec.push("Pilar: terapia compresiva (si ITB lo permite). El apósito es secundario.");
+  }
+  if (tipo === 'arterial') {
+    rec.push("Valorar vascularización urgentemente. Evitar compresión. No hidratar necrosis sin descartar isquemia.");
+  }
+  if (tipo === 'dfu') {
+    rec.push("Descarga de presión esencial. Evitar antimicrobianos y colágeno de forma rutinaria (IWGDF). Apósito básico que mantenga humedad.");
+  }
+  if (tipo === 'upp') {
+    rec.push("Alivio de presión + SEMP. Espumas recomendadas para exudado moderado-alto.");
+  }
+  if (tipo === 'quemadura') {
+    rec.push("Hidrogel ha mostrado reducción de tiempo de cicatrización en 2º grado.");
+  }
+
+  let html = "<h3>Recomendación orientativa</h3><ul>";
+  rec.forEach(r => html += "<li>" + r + "</li>");
+  html += "</ul><p><strong>Productos comerciales frecuentes:</strong> " + [...new Set(productos)].join(", ") + "</p>";
+  html += "<p class='warning' style='padding:.6rem; border-radius:6px;'>Esta recomendación es educativa. Confirmar con valoración clínica completa, ITB si procede, y disponibilidad SESPA.</p>";
+
+  const res = document.getElementById('resultado');
+  res.innerHTML = html;
+  res.style.display = 'block';
+}
+</script>
+</body>
+</html>
