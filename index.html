@@ -492,11 +492,6 @@ function analizarValoracion() {
   res.innerHTML = html;
   res.style.display = 'block';
 }
-  document.querySelectorAll('section').forEach(s => s.classList.remove('active'));
-  document.querySelectorAll('nav button').forEach(b => b.classList.remove('active'));
-  document.getElementById(id).classList.add('active');
-  event.target.classList.add('active');
-}
 
 function calcularBayes() {
   // Priors según literatura (NEJM 2017 ~70% venosa en pierna; estudios GNEAUPP España)
