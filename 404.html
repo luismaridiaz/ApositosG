@@ -310,6 +310,7 @@
   </section>
 
   <!-- BOT TRATAMIENTOS -->
+  <section id="bot">
     <h2>Bot de Tratamientos (recomendación orientativa)</h2>
     <p>Selecciona las características de la herida. El bot aplica la lógica de los documentos clínicos y catálogo SESPA.</p>
     <div class="grid-2">
@@ -355,7 +356,7 @@
     <label>Observaciones adicionales (piel frágil, dolor, olor, cavidad…)</label>
     <textarea id="obs" rows="2" placeholder="Ej: piel frágil, muy dolorosa, mal olor, cavidad..."></textarea>
     <button class="primary" onclick="recomendar()">Generar recomendación</button>
-    <div id="resultado"></div>
+    <div id="resultado" style="margin-top:1.2rem; padding:1rem; background:#e7f1ff; border-radius:8px; display:none;"></div>
   </section>
 
   <!-- CATÁLOGO -->
@@ -378,6 +379,7 @@
       <tr><td>URGOSTART</td><td>TLC-NOSF</td><td>Úlceras venosas / DFU difíciles</td><td>6-12 €</td></tr>
       <tr><td>CUTIMED EPIONA</td><td>Colágeno</td><td>Modulador de proteasas</td><td>5-10 €</td></tr>
       <tr><td>MEDIHONEY / ACTIVON</td><td>Miel médica</td><td>Quemaduras, heridas seleccionadas</td><td>Variable (uso limitado en España)</td></tr>
+    </table>
     <div class="card">
       <strong>SESPA Asturias (ejemplos):</strong> Biatain Silicone, Aquacel Foam Pro, Mepilex Border Ag, Urgosorb, Nu-Gel, Cutimed Sorbact, sistemas de compresión Profore/Jobst.
     </div>
