@@ -113,7 +113,7 @@
 <header>
   <h1>App Apósitos & Cuidado de Heridas</h1>
   <p>Guía práctica basada en documentos clínicos, SESPA Asturias y principios del Ministerio de Sanidad / guías españolas</p>
-  <p style="font-size:.8rem; margin-top:.4rem;">Educativa · No sustituye valoración clínica ni protocolos locales</p>
+  <p style="font-size:.8rem; margin-top:.4rem;">Educativa · No sustituye valoración clínica ni protocolos locales<br><span style="opacity:.7;">AN-LD CSV</span></p>
   <button id="theme-toggle" style="margin-top:0.6rem; background:rgba(255,255,255,.2); color:white; border:1px solid rgba(255,255,255,.4); padding:.4rem 1rem; border-radius:20px; cursor:pointer; font-size:.85rem;">🌙 Modo oscuro</button>
 </header>
 
@@ -127,7 +127,12 @@
   <button onclick="showSection('bot')">Bot Tratamientos</button>
   <button onclick="showSection('catalogo')">Catálogo & Costes</button>
   <button onclick="showSection('internacionales')">Miel & Larvas</button>
+  <button onclick="showSection('biofilm')">Biofilm</button>
+  <button onclick="showSection('perilesional')">Piel Perilesional</button>
+  <button onclick="showSection('upp')">Prevención UPP</button>
+  <button onclick="showSection('calzado')">Calzado Diabético</button>
   <button onclick="showSection('referencias')">Referencias</button>
+  <button onclick="showSection('nohacer')">Qué no hacer</button>
 </nav>
 
 <main>
@@ -145,7 +150,7 @@
       <li><strong>1980s-actualidad:</strong> Apósitos interactivos/bioactivos (hidrocoloides, alginatos, espumas, hidrogeles…).</li>
     </ul>
     <div class="card">
-      <strong>Versión 1.18:</strong> Motor clínico unificado (motorClinico) compartido por Valoración y Bot de Tratamientos. Sistema de referencias con niveles V1/V2/V3. Botón Limpiar y accesibilidad.
+      <strong>Versión 1.23:</strong> Nueva pestaña “Qué no hacer” basada en el documento GNEAUPP nº XIV (2020).
     </div>
   </section>
 
@@ -269,7 +274,7 @@
       <tr><td>Compresión</td><td><strong>Contraindicada</strong> si ITB bajo</td><td>Pilar del tratamiento</td><td>Según componente vascular</td></tr>
     </table>
     <div class="card danger">
-      <strong>Importante:</strong> Valorar siempre ITB (índice tobillo-brazo) antes de comprimir. En pie diabético con necrosis: no hidratar hasta descartar isquemia crítica. Mixtas son frecuentes (10-20%).
+      <strong>Importante:</strong> Valorar siempre ITB antes de comprimir. En heridas que no progresan pese a cuidados adecuados, sospechar biofilm (60-90 % de crónicas). Mixtas son frecuentes (10-20 %).
     </div>
   </section>
 
@@ -422,6 +427,144 @@
     <p style="font-size:.85rem;">Referencias principales: Cochrane Database Syst Rev (Honey for wounds, Jull et al.); Systematic reviews on larval therapy (MDPI 2025, PMC reviews); NICE guidelines on pressure ulcers.</p>
   </section>
 
+  <!-- BIOFILM -->
+  <section id="biofilm">
+    <h2>Biofilm y Higiene de la Herida</h2>
+    <div class="card danger">
+      <strong>Evidencia actual:</strong> El biofilm está presente en el 60-90 % de las heridas crónicas (meta-análisis ≈ 78 %). Consensos (Schultz 2017, IWII) lo consideran, una vez controlados otros factores, la causa individual más importante del retraso de cicatrización. No se elimina con un solo producto.
+    </div>
+    <h3>Estrategia de higiene de la herida (4 pasos)</h3>
+    <ol>
+      <li><strong>Limpiar</strong> lecho y piel perilesional.</li>
+      <li><strong>Desbridar</strong> (piedra angular). El biofilm se reorganiza en 24-72 h.</li>
+      <li><strong>Antisepsia dirigida</strong> (PHMB, octenidina, HClO) solo si hay sospecha de biofilm.</li>
+      <li><strong>Apósito anti-biofilm</strong> hasta el cierre.</li>
+    </ol>
+    <h3>Apósitos anti-biofilm</h3>
+    <table>
+      <tr><th>Tecnología</th><th>Mecanismo</th><th>Cuándo priorizar</th></tr>
+      <tr><td>Plata (iónica/nanocristalina)</td><td>Iones Ag⁺</td><td>Infección local o biofilm establecido</td></tr>
+      <tr><td>PHMB</td><td>Antisepsia baja toxicidad</td><td>Intolerancia a plata o protección prolongada</td></tr>
+      <tr><td>DACC</td><td>Captación física</td><td>Alternativa no antimicrobiana; DFU</td></tr>
+    </table>
+    <div class="card warning">
+      <strong>Miel médica:</strong> Puede ayudar a interrumpir biofilm. Evidencia limitada. IWGDF no la recomienda de rutina en pie diabético. Alerta AEMPS 2025 sobre algunos lotes MediHoney.
+    </div>
+  </section>
+
+  <!-- PIEL PERILESIONAL -->
+  <section id="perilesional">
+    <h2>Piel Perilesional</h2>
+    <div class="card">
+      <strong>Principio:</strong> Mantener el lecho húmedo y la piel perilesional protegida. La protección perilesional es práctica estándar aceptada, pero el nivel de evidencia de las cremas y films barrera es bajo (revisiones scoping).
+    </div>
+    <h3>Productos barrera</h3>
+    <table>
+      <tr><th>Producto</th><th>Ventaja</th><th>Limitación</th><th>Evidencia</th></tr>
+      <tr><td>Óxido de zinc</td><td>Astringente, bajo coste</td><td>Retirada difícil (requiere base oleosa)</td><td>Baja (consenso GNEAUPP)</td></tr>
+      <tr><td>Película sin alcohol (PBNI / dimeticona)</td><td>Fácil retirada, no escuece, permite visualizar</td><td>Coste mayor</td><td>Baja-moderada (similar efectividad al zinc)</td></tr>
+      <tr><td>AGHO</td><td>Prevención UPP en piel sana</td><td>No indicado en herida abierta</td><td>Insuficiente para perilesional</td></tr>
+    </table>
+    <div class="card warning">
+      <strong>Corticoides tópicos:</strong> Solo en dermatitis/eccema perilesional (potencia media, capa fina, máximo 4 semanas). No usar en infección activa ni herida abierta.
+    </div>
+  </section>
+
+  <!-- PREVENCIÓN UPP -->
+  <section id="upp">
+    <h2>Prevención de Úlceras por Presión</h2>
+    <h3>Pilares</h3>
+    <ul>
+      <li>Valoración del riesgo (Braden / Norton).</li>
+      <li>Movilización y cambios posturales.</li>
+      <li>SEMP / superficies antiescaras (estáticas o dinámicas según riesgo).</li>
+      <li>Cuidados de la piel + AGHO en zonas de riesgo.</li>
+      <li>Apósitos profilácticos de silicona en prominencias.</li>
+    </ul>
+    <h3>SEMP</h3>
+    <table>
+      <tr><th>Tipo</th><th>Indicación orientativa</th><th>Notas</th></tr>
+      <tr><td>Estáticas (espuma alta especificación, aire estático)</td><td>Riesgo bajo-moderado</td><td>Superiores a colchón convencional</td></tr>
+      <tr><td>Dinámicas (presión alternante)</td><td>Riesgo alto</td><td>Celdas > 10 cm. Diferencias clínicas limitadas vs estáticas avanzadas</td></tr>
+    </table>
+    <div class="card success">
+      <strong>Apósitos de silicona profilácticos:</strong> Metaanálisis reciente muestra alta probabilidad de ser la mejor opción local para prevenir UPP en prominencias.
+    </div>
+  </section>
+
+  <!-- CALZADO DIABÉTICO -->
+  <section id="calzado">
+    <h2>Calzado Terapéutico en Pie Diabético</h2>
+    <div class="card">
+      <strong>Objetivo:</strong> Reducir presión plantar (≥ 30 % o < 200 kPa). No es solo “zapato ancho”.
+    </div>
+    <h3>Evidencia</h3>
+    <ul>
+      <li>Prevención primaria: RR ≈ 0,49 vs calzado convencional.</li>
+      <li>Prevención de recurrencia: consistente (IWGDF 2023).</li>
+      <li><strong>Úlcera plantar activa:</strong> el calzado terapéutico no es descarga de primera línea. Gold standard = dispositivo no removible hasta la rodilla.</li>
+    </ul>
+    <h3>Características clave</h3>
+    <ul>
+      <li>Profundidad extra, puntera amplia, suela rígida con balancín.</li>
+      <li>Adherencia crítica: usar ≥ 60-80 % del tiempo activo.</li>
+    </ul>
+    <div class="card warning">
+      <strong>España:</strong> Prestación ortoprotésica ≈ 120 €/par. Acceso heterogéneo.
+    </div>
+  </section>
+
+  <!-- QUÉ NO HACER (GNEAUPP) -->
+  <section id="nohacer">
+    <h2>Qué no hacer en heridas crónicas</h2>
+    <p>Síntesis basada en el documento GNEAUPP nº XIV (2020) “Qué no hacer en heridas crónicas”.</p>
+    <div class="card danger">
+      <strong>Principio general:</strong> Evitar la iatrogenia. Muchas prácticas con apariencia de “cuidado” generan daño, resistencias o retraso de la cicatrización.
+    </div>
+    <h3>Diagnóstico y valoración</h3>
+    <ul>
+      <li>No iniciar tratamiento tópico sin diagnóstico etiológico previo (fuerza Alta).</li>
+      <li>No usar escalas o instrumentos no validados.</li>
+    </ul>
+    <h3>Limpieza y antisepsia</h3>
+    <ul>
+      <li>No usar antisépticos de forma rutinaria (fuerza Baja). Reservar para alta carga bacteriana, biofilm o peri-desbridamiento.</li>
+      <li>No usar esponjas con clorhexidina de rutina.</li>
+    </ul>
+    <h3>Desbridamiento</h3>
+    <ul>
+      <li>No desbridar cortante placas necróticas secas en miembros inferiores con isquemia (nivel C).</li>
+      <li>No desbridar cortante en alto riesgo de sangrado sin consultar.</li>
+      <li>No desbridar escaras secas de talón salvo signos de complicación.</li>
+    </ul>
+    <h3>Prevención de presión</h3>
+    <ul>
+      <li>No usar cojines redondos cerrados (tipo rosca/flotador) (fuerza Alta).</li>
+      <li>No dejar la cuña/orinal más tiempo del necesario.</li>
+      <li>No colocar a la persona directamente sobre sondas o tubos.</li>
+    </ul>
+    <h3>Antibióticos y antimicrobianos</h3>
+    <ul>
+      <li>No usar antibióticos tópicos profilácticos en heridas leves.</li>
+      <li>No usar antibióticos sistémicos profilácticos en heridas crónicas.</li>
+      <li>No tratar infección local con antibióticos sistémicos de forma rutinaria.</li>
+    </ul>
+    <h3>Terapia de presión negativa (TPN)</h3>
+    <ul>
+      <li>No aplicar TPN sobre tejido necrótico sin desbridamiento previo.</li>
+      <li>No interponer materiales no indicados entre lecho y espuma.</li>
+      <li>No omitir capa de contacto en tejido frágil o hueso expuesto.</li>
+      <li>No ignorar fugas persistentes (corregir en 24 h).</li>
+    </ul>
+    <h3>Piel perilesional</h3>
+    <ul>
+      <li>No retirar cremas de óxido de zinc solo con agua (requiere base oleosa).</li>
+    </ul>
+    <div class="card">
+      <strong>Referencia principal:</strong> García-Fernández FP et al. Qué no hacer en heridas crónicas. Serie Documentos Técnicos GNEAUPP nº XIV. 2020.
+    </div>
+  </section>
+
   <!-- REFERENCIAS -->
   <section id="referencias">
     <h2>Referencias y fuentes</h2>
@@ -446,6 +589,10 @@
     <div id="referencias-dinamicas"></div>
     <h3>Changelog (versiones recientes)</h3>
     <ul style="font-size:.9rem;">
+      <li><strong>v1.23</strong>: Pestaña “Qué no hacer” (documento GNEAUPP nº XIV 2020).</li>
+      <li><strong>v1.22</strong>: Integración de biofilm y protección perilesional en motor/bots. SEMP/antiescaras explícito en UPP.</li>
+      <li><strong>v1.21</strong>: Evidencia actualizada sobre biofilm (prevalencia y consensos) y nivel de evidencia bajo de barreras perilesionales.</li>
+      <li><strong>v1.20</strong>: Pestañas Biofilm, Perilesional, Prevención UPP y Calzado Diabético. Motor actualizado.</li>
       <li><strong>v1.18</strong>: Motor clínico unificado (motorClinico) + referencias V1/V2/V3.</li>
       <li><strong>v1.17</strong>: Botón Limpiar y mejoras de accesibilidad (focus y labels).</li>
       <li><strong>v1.16</strong>: Cargar último caso, contraindicaciones en catálogo y matices entre guías.</li>
@@ -465,8 +612,9 @@
 </main>
 
 <footer>
-  App educativa generada a partir de documentos clínicos y materiales SESPA / sistema sanitario español. Última revisión: octubre 2026 (v1.19 – registro de Service Worker incluido).<br>
-  No es un dispositivo médico ni sustituye la atención profesional. Offline: solo caché del navegador (para offline real e instalación PWA completa se requiere un sw.js companion).
+  App educativa generada a partir de documentos clínicos y materiales SESPA / sistema sanitario español. Última revisión: octubre 2026 (v1.23 – pestaña Qué no hacer GNEAUPP).<br>
+  No es un dispositivo médico ni sustituye la atención profesional. Offline: solo caché del navegador (para offline real e instalación PWA completa se requiere un sw.js companion).<br>
+  <span style="opacity:.6;">AN-LD CSV</span>
 </footer>
 
 <script type="application/json" id="data-catalogo">
@@ -615,6 +763,11 @@ function motorClinico(datos) {
   if (infeccion === 'si' || datos.inf) {
     alertas.push('Infección: valoración médica. Antimicrobiano tópico solo temporal (10-14 días).');
     productos.push('Plata/PHMB temporal');
+    rec.push('Sospecha de biofilm (presente en 60-90 % de heridas crónicas): estrategia de higiene (limpiar + desbridar + antisepsia dirigida + apósito anti-biofilm). El biofilm se reorganiza en 24-72 h.');
+  }
+  // Protección perilesional (práctica estándar, evidencia baja)
+  if (exudado === 'alto' || exudado === 'moderado') {
+    rec.push('Proteger piel perilesional (crema/film barrera). Evidencia baja, pero práctica estándar para evitar maceración.');
   }
   if ((pulses === 'ausentes' || itb < 0.5) && (pain === 'arterial' || tejido === 'necrotico')) {
     alertas.push('Sospecha isquemia crítica: derivación urgente. No comprimir. No desbridar agresivamente.');
@@ -646,7 +799,7 @@ function motorClinico(datos) {
     else { rec.push('Hidrocoloide fino o film.'); }
   }
 
-  return { rec, alertas, productos: [...new Set(productos)] };
+  rec.push('Proteger siempre la piel perilesional (óxido de zinc o película sin alcohol). AGHO solo en piel sana.');
 }
 
 function analizarValoracion() {
