@@ -531,6 +531,8 @@ function renderReferencias() {
   html += '</table><p style="font-size:.8rem;">V1 = evidencia sólida / guía de alto nivel; V2 = moderada; V3 = limitada o no recomendada de rutina.</p>';
   cont.innerHTML = html;
 }
+
+function renderCatalogo(filtro = '') {
   const data = loadData('data-catalogo');
   const cont = document.getElementById('catalogo-dinamico');
   if (!data || !cont) return;
@@ -826,17 +828,6 @@ function recomendar() {
   html += "<ul>" + motor.rec.map(r => "<li>" + r + "</li>").join("") + "</ul>";
   html += "<p><strong>Clases de producto:</strong> " + motor.productos.join(", ") + "</p>";
   html += "<p class='warning' style='padding:.6rem; border-radius:6px;'>Generado por la misma función motorClinico() que la Valoración Clínica. Educativa. Confirmar con ITB y juicio clínico.</p>";
-
-  const res = document.getElementById('resultado');
-  res.innerHTML = html;
-  res.style.display = 'block';
-}
-  }
-
-  let html = "<h3>Recomendación orientativa</h3><ul>";
-  rec.forEach(r => html += "<li>" + r + "</li>");
-  html += "</ul><p><strong>Productos comerciales frecuentes:</strong> " + [...new Set(productos)].join(", ") + "</p>";
-  html += "<p class='warning' style='padding:.6rem; border-radius:6px;'>Esta recomendación es educativa. Confirmar con valoración clínica completa, ITB si procede, y disponibilidad SESPA.</p>";
 
   const res = document.getElementById('resultado');
   res.innerHTML = html;
